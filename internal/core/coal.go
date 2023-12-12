@@ -14,8 +14,6 @@ func Start(payload []uint8, datasetSong *io.Reader) float64 {
 	// Call comparison system
 	matchingSequence := lcs(payload, songToCompare)
 
-	// fmt.Println(matchingSequence)
-
 	// Percentage of matching notes in the input song
 	matchingRate := float64(len(matchingSequence)) / float64(len(payload))
 
