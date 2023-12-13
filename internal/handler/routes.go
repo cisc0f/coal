@@ -43,8 +43,6 @@ func PostCompare(database *fire.DB, storage *fire.Storage, payload *io.Reader) (
 	// Get Notes On from the input song
 	inputSong := coal.ReadNotesOn(payload)
 
-	// fmt.Print(inputSong)
-
 	res := &CoalServerResponse{}
 	var maxMatchingRate float64 = 0.0
 

@@ -1,6 +1,7 @@
 package coal
 
 import (
+	"fmt"
 	"io"
 
 	"gitlab.com/gomidi/midi/v2/smf"
@@ -9,12 +10,20 @@ import (
 // Start function for the Coal algorithm
 func Start(payload []uint8, datasetSong *io.Reader) float64 {
 
+	fmt.Println("INPUT SONG")
+	fmt.Println(payload)
+	fmt.Println("-------------")
+
 	songToCompare := ReadNotesOn(datasetSong)
+
+	fmt.Println("SONG TO COMPARE")
+	fmt.Println(songToCompare)
+	fmt.Println("-------------")
 
 	// Call comparison system
 	matchingSequence := lcs(payload, songToCompare)
 
-	// fmt.Println(matchingSequence)
+	fmt.Println(matchingSequence)
 
 	// Percentage of matching notes in the input song
 	matchingRate := float64(len(matchingSequence)) / float64(len(payload))
@@ -64,7 +73,7 @@ func lcs(song1 []uint8, song2 []uint8) []uint8 {
 					endingIndex = i
 				}
 			} else {
-				dp[i][j] = 0
+				dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 			}
 		}
 	}

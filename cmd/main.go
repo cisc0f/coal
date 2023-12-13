@@ -3,10 +3,12 @@ package main
 import (
 	"io"
 	"net/http"
+	"time"
 
 	fire "github.com/cisc0f/coal/internal/db"
 	"github.com/cisc0f/coal/internal/handler"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -94,6 +96,15 @@ func main() {
 	}
 
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"POST", "GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length", "Content-Type"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 	router.GET("/status", getStatus())
 	router.GET("/songs", getSongs(db))
 	router.POST("/compare", postCompare(db, s))
