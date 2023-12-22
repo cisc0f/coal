@@ -73,6 +73,7 @@ func lcs(song1 []uint8, song2 []uint8) []uint8 {
 					endingIndex = i
 				}
 			} else {
+				// One gap version
 				dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 			}
 		}
